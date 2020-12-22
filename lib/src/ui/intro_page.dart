@@ -13,26 +13,20 @@ class IntroPage extends StatelessWidget {
       color: page.decoration.pageColor,
       decoration: page.decoration.boxDecoration,
       child: SafeArea(
-        top: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
           children: [
             if (page.image != null)
-              Expanded(
-                flex: page.decoration.bodyFlex,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 70.0),
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: IntroContent(page: page),
-                  ),
-                ),
-              ),
-            Expanded(
-              flex: page.decoration.imageFlex,
-              child: Padding(
-                padding: page.decoration.imagePadding,
+              Positioned(
+                top: 16,
                 child: page.image,
+              ),
+            Positioned(
+              top: 16,
+              right: 16,
+              left: 16,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: IntroContent(page: page),
               ),
             ),
           ],
