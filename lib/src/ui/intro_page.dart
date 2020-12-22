@@ -17,11 +17,13 @@ class IntroPage extends StatelessWidget {
           children: [
             if (page.image != null)
               Positioned(
-                top: 16,
+                top: 0,
+                left: 0,
+                right: 0,
                 child: page.image,
               ),
             Positioned(
-              top: 16,
+              top: 0,
               right: 16,
               left: 16,
               child: SingleChildScrollView(
