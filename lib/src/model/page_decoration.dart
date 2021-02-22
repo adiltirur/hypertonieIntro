@@ -65,7 +65,7 @@ class PageDecoration {
     this.contentPadding = const EdgeInsets.all(8.0),
     this.titlePadding = const EdgeInsets.only(bottom: 8.0, top: 8),
     this.descriptionPadding = EdgeInsets.zero,
-    this.footerPadding = const EdgeInsets.symmetric(vertical: 24.0),
+    this.footerPadding = const EdgeInsets.symmetric(vertical: 8.0),
   }) : assert(pageColor == null || boxDecoration == null,
             'Cannot provide both a Color and a BoxDecoration\n');
 }

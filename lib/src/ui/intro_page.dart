@@ -17,7 +17,7 @@ class IntroPage extends StatelessWidget {
           children: [
             if (page.image != null)
               Positioned(
-                top: 0,
+                top: 88,
                 left: 0,
                 right: 0,
                 child: page.image,
