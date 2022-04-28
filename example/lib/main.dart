@@ -41,6 +41,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     );
   }
 
+  final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+      backgroundColor: Colors.lightBlue,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)));
   @override
   Widget build(BuildContext context) {
     const bodyStyle = TextStyle(fontSize: 19.0);
@@ -80,17 +83,14 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           title: "Another title page",
           body: "Another beautiful body text for this example onboarding",
           image: _buildImage('img2'),
-          footer: RaisedButton(
+          footer: ElevatedButton(
+            style: flatButtonStyle,
             onPressed: () {
               introKey.currentState?.animateScroll(0);
             },
             child: const Text(
               'FooButton',
               style: TextStyle(color: Colors.white),
-            ),
-            color: Colors.lightBlue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
             ),
           ),
           decoration: pageDecoration,
