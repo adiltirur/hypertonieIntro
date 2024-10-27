@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 class PageDecoration {
   /// Background page color
-  final Color pageColor;
+  final Color? pageColor;
 
   /// TextStyle for title
   ///
   /// @Default style `fontSize: 20.0, fontWeight: FontWeight.bold`
   final TextStyle titleTextStyle;
 
-  /// TextStyle for title
+  /// TextStyle for body
   ///
   /// @Default style `fontSize: 18.0, fontWeight: FontWeight.normal`
   final TextStyle bodyTextStyle;
 
   /// BoxDecoration for page
-  final BoxDecoration boxDecoration;
+  final BoxDecoration? boxDecoration;
 
   /// Flex ratio of the image
   final int imageFlex;
@@ -25,27 +25,27 @@ class PageDecoration {
 
   /// Padding of image
   ///
-  /// @Default `EdgeInsets.only(bottom: 24.0)`
+  /// @Default `EdgeInsets.only(bottom: 8.0, top: 8.0)`
   final EdgeInsets imagePadding;
 
   /// Padding of content (title + description + footer)
   ///
-  /// @Default `EdgeInsets.all(16.0)`
+  /// @Default `EdgeInsets.all(8.0)`
   final EdgeInsets contentPadding;
 
   /// Padding of title
   ///
-  /// @Default `EdgeInsets.only(bottom: 24.0)`
+  /// @Default `EdgeInsets.only(bottom: 8.0, top: 8.0)`
   final EdgeInsets titlePadding;
 
   /// Padding of description
   ///
-  /// @Default: `EdgeInsets.zero`
+  /// @Default `EdgeInsets.zero`
   final EdgeInsets descriptionPadding;
 
   /// Padding of footer
   ///
-  /// @Default `EdgeInsets.symmetric(vertical: 24.0)`
+  /// @Default `EdgeInsets.symmetric(vertical: 8.0)`
   final EdgeInsets footerPadding;
 
   const PageDecoration({
@@ -61,11 +61,13 @@ class PageDecoration {
     this.boxDecoration,
     this.imageFlex = 1,
     this.bodyFlex = 1,
-    this.imagePadding = const EdgeInsets.only(bottom: 8.0, top: 8),
+    this.imagePadding = const EdgeInsets.only(bottom: 8.0, top: 8.0),
     this.contentPadding = const EdgeInsets.all(8.0),
-    this.titlePadding = const EdgeInsets.only(bottom: 8.0, top: 8),
+    this.titlePadding = const EdgeInsets.only(bottom: 8.0, top: 8.0),
     this.descriptionPadding = EdgeInsets.zero,
     this.footerPadding = const EdgeInsets.symmetric(vertical: 8.0),
-  }) : assert(pageColor == null || boxDecoration == null,
-            'Cannot provide both a Color and a BoxDecoration\n');
+  }) : assert(
+          pageColor == null || boxDecoration == null,
+          'Cannot provide both a Color and a BoxDecoration.\n',
+        );
 }

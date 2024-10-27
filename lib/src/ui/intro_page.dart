@@ -5,7 +5,7 @@ import 'package:introduction_screen/src/ui/intro_content.dart';
 class IntroPage extends StatelessWidget {
   final PageViewModel page;
 
-  const IntroPage({Key key, @required this.page}) : super(key: key);
+  const IntroPage({required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +15,12 @@ class IntroPage extends StatelessWidget {
       child: SafeArea(
         child: Stack(
           children: [
-            if (page.image != null)
-              Positioned(
-                top: 44,
-                left: 0,
-                right: 0,
-                child: page.image,
-              ),
+            Positioned(
+              top: 44,
+              left: 0,
+              right: 0,
+              child: page.image ?? SizedBox(),
+            ),
             Positioned(
               top: 0,
               right: 16,

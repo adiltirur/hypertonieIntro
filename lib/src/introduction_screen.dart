@@ -1,6 +1,5 @@
 library introduction_screen;
 
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -20,16 +19,16 @@ class IntroductionScreen extends StatefulWidget {
   final Widget done;
 
   /// Callback when Skip button is pressed
-  final VoidCallback onSkip;
+  final VoidCallback? onSkip;
 
   /// Callback when page change
-  final ValueChanged<int> onChange;
+  final ValueChanged<int>? onChange;
 
   /// Skip button
-  final Widget skip;
+  final Widget? skip;
 
   /// Next button
-  final Widget next;
+  final Widget? next;
 
   /// Is the Skip button should be display
   ///
@@ -46,18 +45,18 @@ class IntroductionScreen extends StatefulWidget {
   /// @Default `true`
   final bool isProgress;
 
-  /// Is the user is allow to change page
+  /// Is the user is allowed to change page
   ///
   /// @Default `false`
   final bool freeze;
 
   /// Global background color (only visible when a page has a transparent background color)
-  final Color globalBackgroundColor;
+  final Color? globalBackgroundColor;
 
-  /// Dots decorator to custom dots color, size and spacing
+  /// Dots decorator to custom dots color, size, and spacing
   final DotsDecorator dotsDecorator;
 
-  /// Animation duration in millisecondes
+  /// Animation duration in milliseconds
   ///
   /// @Default `350`
   final int animationDuration;
@@ -88,10 +87,10 @@ class IntroductionScreen extends StatefulWidget {
   final Curve curve;
 
   const IntroductionScreen({
-    Key key,
-    @required this.pages,
-    @required this.onDone,
-    @required this.done,
+    Key? key,
+    required this.pages,
+    required this.onDone,
+    required this.done,
     this.onSkip,
     this.onChange,
     this.skip,
@@ -108,16 +107,9 @@ class IntroductionScreen extends StatefulWidget {
     this.dotsFlex = 1,
     this.nextFlex = 1,
     this.curve = Curves.easeIn,
-  })  : assert(pages != null),
-        assert(
-          pages.length > 0,
-          "You provide at least one page on introduction screen !",
-        ),
-        assert(onDone != null),
-        assert(done != null),
-        assert((showSkipButton && skip != null) || !showSkipButton),
+  })  : assert((showSkipButton && skip != null) || !showSkipButton),
         assert(skipFlex >= 0 && dotsFlex >= 0 && nextFlex >= 0),
-        assert(initialPage == null || initialPage >= 0),
+        assert(initialPage >= 0),
         super(key: key);
 
   @override
@@ -125,10 +117,8 @@ class IntroductionScreen extends StatefulWidget {
 }
 
 class IntroductionScreenState extends State<IntroductionScreen> {
-  PageController _pageController;
-  double _currentPage = 0.0;
-  bool _isSkipPressed = false;
-  bool _isScrolling = false;
+  late final PageController _pageController;
+  int _currentPage = 0;
 
   PageController get controller => _pageController;
 
@@ -136,39 +126,14 @@ class IntroductionScreenState extends State<IntroductionScreen> {
   void initState() {
     super.initState();
     int initialPage = min(widget.initialPage, widget.pages.length - 1);
-    _currentPage = initialPage.toDouble();
+    _currentPage = initialPage;
     _pageController = PageController(initialPage: initialPage);
-  }
-
-  void _onNext() {
-    animateScroll(min(_currentPage.round() + 1, widget.pages.length - 1));
-  }
-
-  Future<void> _onSkip() async {
-    if (widget.onSkip != null) return widget.onSkip();
-    await skipToEnd();
-  }
-
-  Future<void> skipToEnd() async {
-    setState(() => _isSkipPressed = true);
-    await animateScroll(widget.pages.length - 1);
-    setState(() => _isSkipPressed = false);
-  }
-
-  Future<void> animateScroll(int page) async {
-    setState(() => _isScrolling = true);
-    await _pageController.animateToPage(
-      page,
-      duration: Duration(milliseconds: widget.animationDuration),
-      curve: widget.curve,
-    );
-    setState(() => _isScrolling = false);
   }
 
   bool _onScroll(ScrollNotification notification) {
     final metrics = notification.metrics;
     if (metrics is PageMetrics) {
-      setState(() => _currentPage = metrics.page);
+      setState(() => _currentPage = metrics.page?.toInt() ?? 0);
     }
     return false;
   }
@@ -176,15 +141,9 @@ class IntroductionScreenState extends State<IntroductionScreen> {
   @override
   Widget build(BuildContext context) {
     final isLastPage = (_currentPage.round() == widget.pages.length - 1);
-    bool isSkipBtn = (!_isSkipPressed && !isLastPage && widget.showSkipButton);
-
-    final skipBtn = IntroButton(
-      child: widget.skip,
-      onPressed: isSkipBtn ? _onSkip : null,
-    );
 
     final nextBtn = IntroButton(
-      child: widget.next,
+      child: widget.next ?? const SizedBox(),
       onPressed: widget.onDone,
     );
 
